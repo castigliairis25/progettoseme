@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto!</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .content-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            margin: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        .qr-code {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid white;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 300px;
+            background: transparent;
+            color: white;
+        }
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: 2px solid white;
+            border-radius: 25px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .anti-spam {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <h1>Benvenuto!</h1>
+        <p>Siamo felici di averti qui. Esplora e scopri tutto ciò che abbiamo da offrire. Speriamo che la tua esperienza sia piacevole e memorabile.</p>
+        <button onclick="window.location.href='#'">Scopri di più</button>
+    </div>
+
+    <div class="qr-code">
+        <!-- QR code dinamico con la risoluzione della pagina -->
+        <img id="qrImage" src="" alt="QR Code">
+    </div>
+
+    <div class="content-box">
+        <form onsubmit="checkAnswer(event)">
+            <label for="risposta">Quanto fa 3+1?</label><br>
+            <input type="text" id="risposta" name="risposta" placeholder="Inserisci la risposta" required>
+            <button type="submit">Verifica</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="anti-spam">
+        <p>Questa pagina è protetta da anti-spam. Non condividere informazioni sensibili.</p>
+    </div>
+
+    <script>
+        function updateQRCode() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const resolution = `${width}x${height}`;
+            const qrImage = document.getElementById('qrImage');
+            qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=${resolution}`;
+        }
+
+        function checkAnswer(event) {
+            event.preventDefault();
+            const answer = document.getElementById('risposta').value;
+            const resultDiv = document.getElementById('result');
+            if (answer === "4") {
+                resultDiv.textContent = "Corretto! Ben fatto!";
+                resultDiv.style.color = "#4CAF50";
+            } else {
+                resultDiv.textContent = "Sbagliato. Riprova!";
+                resultDiv.style.color = "#f44336";
+            }
+        }
+
+        // Aggiorna il QR code all'avvio e al ridimensionamento della finestra
+        window.addEventListener('load', updateQRCode);
+        window.addEventListener('resize', updateQRCode);
+    </script>
+</body>
+</html>
